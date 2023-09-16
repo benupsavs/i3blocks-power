@@ -1,0 +1,12 @@
+[package]
+name = "i3blocks-power"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+envconfig = "0.10.0"
+futures = "0.3.28"
+upower_dbus = "0.3.2"
+zbus = "3.13.1"
