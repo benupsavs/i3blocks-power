@@ -15,5 +15,22 @@ pub struct BatteryEvent {
 
 /// Event sent when a power profile changes.
 pub struct ProfileEvent {
+    pub profile_name: String,
+}
 
+// One of the power profile states.
+pub enum ProfileState {
+    Low,
+    Medium,
+    High,
+}
+
+impl ProfileState {
+    pub fn name(&self) -> &'static str {
+        match self {
+            ProfileState::Low => "power-saver",
+            ProfileState::Medium => "balanced",
+            ProfileState::High => "performance",
+        }
+    }
 }

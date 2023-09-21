@@ -13,7 +13,7 @@ pub struct UdevSubscription {}
 impl UdevSubscription {
     /// creates a battery event subscription using udev.
     pub fn subscribe(tx: Sender<PowerEvent>) -> Result<UdevSubscription, Box<dyn std::error::Error>> {
-        let t = thread::Builder::new()
+        let _t = thread::Builder::new()
             .name("upower subscription".into())
             .spawn(move || {
                 futures::executor::block_on(async move {
@@ -37,7 +37,6 @@ impl UdevSubscription {
                     let device = device.unwrap();
                     let percentage = device.percentage().await.unwrap_or_default();
                     let battery_state = device.state().await.unwrap_or(BatteryState::Unknown);
-                    // println!("Battery: {}, {:?}", device.percentage().await.map(|p| p.to_string()).unwrap_or("Unknown".to_string()), res);
                     if tx.send(PowerEvent::Battery(BatteryEvent{percentage: Some(percentage), state: Some(ChargingState(battery_state))})).is_err() {
                         return;
                     }
@@ -66,9 +65,6 @@ impl UdevSubscription {
                             }
                         };
                     }
-                    // while let Some(v) = state_stream.next().await {
-                    //     println!("Got: {:?}", v.get().await);
-                    // }
                 });
             })?;
         return Ok(UdevSubscription {})
