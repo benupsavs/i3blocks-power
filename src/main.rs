@@ -4,7 +4,7 @@ use envconfig::Envconfig;
 use i3blocks_power::{battery::UdevSubscription, config::Config, display::DisplayState, profiles::ProfileSubscription};
 
 fn main() -> Result<(), Box<dyn error::Error>> {
-    let config = Config::init_from_env()?;
+    let _config = Config::init_from_env()?;
     let (tx, rx) = mpsc::channel();
     UdevSubscription::subscribe(tx.clone())?;
     let p_sub = ProfileSubscription::subscribe(tx)?;
