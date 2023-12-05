@@ -61,8 +61,14 @@ impl ProfileSubscription {
                                     // if let Err(err) = pp.set_active_profile(ps.name()).await {
                                     //     println!("error setting new profile: {:?}", err);
                                     // }
-                                    // Proxy code didn't work; had to set manually
-                                    let pc = connection.call_method(Some("net.hadess.PowerProfiles"), "/net/hadess/PowerProfiles", Some("org.freedesktop.DBus.Properties"), "Set", &("net.hadess.PowerProfiles", "ActiveProfile", zbus::zvariant::Value::new(ps.name()))).await;
+                                    // The above proxy code is not working. The following is a workaround.
+                                    let pc = connection.call_method(
+                                        Some("net.hadess.PowerProfiles"),
+                                        "/net/hadess/PowerProfiles",
+                                        Some("org.freedesktop.DBus.Properties"),
+                                        "Set",
+                                        &("net.hadess.PowerProfiles", "ActiveProfile", zbus::zvariant::Value::new(ps.name()))
+                                    ).await;
                                     if let Err(err) = pc {
                                         eprintln!("error setting new profile: {:?}", err);
                                     }

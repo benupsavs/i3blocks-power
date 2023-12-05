@@ -19,7 +19,9 @@ pub struct ProfileEvent {
 }
 
 // One of the power profile states.
+#[derive(PartialEq)]
 pub enum ProfileState {
+    Unknown,
     Low,
     Medium,
     High,
@@ -28,6 +30,7 @@ pub enum ProfileState {
 impl ProfileState {
     pub fn name(&self) -> &'static str {
         match self {
+            ProfileState::Unknown => "",
             ProfileState::Low => "power-saver",
             ProfileState::Medium => "balanced",
             ProfileState::High => "performance",
